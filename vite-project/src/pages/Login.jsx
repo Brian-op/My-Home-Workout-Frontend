@@ -1,4 +1,3 @@
-// src/pages/Login.jsx
 import { Formik, Form, Field, ErrorMessage } from 'formik'
 import * as Yup from 'yup'
 import { useNavigate } from 'react-router-dom'
@@ -13,24 +12,18 @@ const Login = () => {
 
   const handleLogin = async (values, { setSubmitting, setErrors }) => {
     try {
-      const response = await fetch('http://localhost:5555/api/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(values),
-      })
+      
+      await new Promise((res) => setTimeout(res, 1000))
 
-      const data = await response.json()
+      const { email, password } = values
 
-      if (!response.ok) {
-        setErrors({ general: data.error || 'Login failed' })
-        return
+      if (email === 'test@example.com' && password === 'password123') {
+        const fakeToken = 'mock-jwt-token.abc123.xyz456'
+        localStorage.setItem('jwt', fakeToken)
+        navigate('/dashboard')
+      } else {
+        setErrors({ general: 'Invalid email or password' })
       }
-
-      // Saving JWT to localStorage
-      localStorage.setItem('jwt', data.token)
-      navigate('/dashboard') 
     } catch (err) {
       setErrors({ general: 'Something went wrong. Try again.' })
     } finally {
