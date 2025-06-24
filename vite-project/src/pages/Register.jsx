@@ -1,11 +1,5 @@
-import React from 'react'
+import RegisterForm from '../components/RegisterForm';
 
-function Register() {
-  return (
-    <div className="text-center mt-10">
-      <h1 className="text-3xl font-bold">Register Page</h1>
-    </div>
-  )
-}
+const Register = () => <RegisterForm />;
 
-export default Register
+export default Register;

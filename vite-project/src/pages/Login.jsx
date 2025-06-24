@@ -1,11 +1,5 @@
-import React from 'react'
+import LoginForm from '../components/LoginForm';
 
-function Login() {
-  return (
-    <div className="text-center mt-10">
-      <h1 className="text-3xl font-bold">Login Page</h1>
-    </div>
-  )
-}
+const Login = () => <LoginForm />;
 
-export default Login
+export default Login;
