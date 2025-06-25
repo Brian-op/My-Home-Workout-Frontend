@@ -1,14 +1,15 @@
 import { Navigate } from 'react-router-dom'
 
-const ProtectedRoute = ({ children }) => {
+function PrivateRoute({ children }) {
   const token = localStorage.getItem('jwt')
 
-  // If no token, send to login
   if (!token) {
+    // Not logged in, redirect to login page
     return <Navigate to="/login" replace />
   }
 
+  // If logged in, show the requested route
   return children
 }
 
-export default ProtectedRoute
+export default PrivateRoute

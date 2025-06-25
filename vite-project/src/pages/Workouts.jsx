@@ -1,111 +1,102 @@
-// src/pages/Workouts.jsx
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
-const dummyWorkouts = [
-  {
-    id: 1,
-    name: 'Full Body Burn',
-    description: 'A 30-minute workout targeting your entire body.',
-    duration: '30 mins',
-    category: 'Strength',
-  },
-  {
-    id: 2,
-    name: 'Cardio Blast',
-    description: 'Get your heart pumping with high-intensity cardio.',
-    duration: '20 mins',
-    category: 'Cardio',
-  },
-  {
-    id: 3,
-    name: 'Core Crusher',
-    description: 'Focused ab workout for a strong core.',
-    duration: '15 mins',
-    category: 'Core',
-  },
+// Dummy workout data
+const workoutsData = [
+  { id: 1, title: 'Push Ups', category: 'Upper Body', instructions: 'Do 3 sets of 15 reps' },
+  { id: 2, title: 'Squats', category: 'Lower Body', instructions: 'Do 3 sets of 20 reps' },
+  { id: 3, title: 'Plank', category: 'Core', instructions: 'Hold for 60 seconds' },
+  { id: 4, title: 'Jumping Jacks', category: 'Cardio', instructions: 'Do 3 sets of 30 seconds' },
+  { id: 5, title: 'Lunges', category: 'Lower Body', instructions: 'Do 3 sets of 10 reps each leg' },
 ]
 
-const categories = ['All', 'Strength', 'Cardio', 'Core']
-
 const Workouts = () => {
+  const [selectedWorkout, setSelectedWorkout] = useState(null)
   const [completedWorkouts, setCompletedWorkouts] = useState([])
-  const [activeWorkout, setActiveWorkout] = useState(null)
   const [filter, setFilter] = useState('All')
-
-  const handleStart = (id) => {
-    setActiveWorkout(id)
-  }
-
-  const handleComplete = (id) => {
-    setCompletedWorkouts((prev) => [...prev, id])
-    setActiveWorkout(null)
-  }
 
   const filteredWorkouts =
     filter === 'All'
-      ? dummyWorkouts
-      : dummyWorkouts.filter((w) => w.category === filter)
+      ? workoutsData
+      : workoutsData.filter((w) => w.category === filter)
+
+  const handleStart = (workout) => {
+    setSelectedWorkout(workout)
+  }
+
+  const handleComplete = () => {
+    if (selectedWorkout) {
+      setCompletedWorkouts((prev) => [...prev, selectedWorkout.id])
+      setSelectedWorkout(null)
+    }
+  }
 
   return (
-    <div className="max-w-4xl mx-auto mt-10 p-6">
-      <h2 className="text-3xl font-bold mb-6 text-center text-blue-600">
-        🏋️ My Workouts
-      </h2>
+    <div className="max-w-3xl mx-auto mt-8 px-4">
+      <h1 className="text-2xl font-bold mb-4">🏋️ Workouts</h1>
 
       {/* Filter */}
-      <div className="mb-6">
-        <label className="mr-2 font-medium text-gray-700">Filter by Category:</label>
+      <div className="mb-4">
+        <label className="block mb-2 font-medium">Filter by Category:</label>
         <select
           value={filter}
           onChange={(e) => setFilter(e.target.value)}
-          className="border p-2 rounded"
+          className="p-2 border rounded"
         >
-          {categories.map((cat) => (
-            <option key={cat} value={cat}>
-              {cat}
-            </option>
-          ))}
+          <option value="All">All</option>
+          <option value="Upper Body">Upper Body</option>
+          <option value="Lower Body">Lower Body</option>
+          <option value="Core">Core</option>
+          <option value="Cardio">Cardio</option>
         </select>
       </div>
 
-      {/* Workouts Grid */}
-      <div className="grid md:grid-cols-2 gap-6">
+      {/* Workout list */}
+      <div className="space-y-4">
         {filteredWorkouts.map((workout) => (
           <div
             key={workout.id}
-            className={`border p-4 rounded-lg shadow transition relative ${
-              completedWorkouts.includes(workout.id) ? 'bg-green-50' : ''
+            className={`p-4 rounded shadow ${
+              completedWorkouts.includes(workout.id)
+                ? 'bg-green-100'
+                : 'bg-white'
             }`}
           >
-            <h3 className="text-xl font-semibold text-gray-800 mb-2">
-              {workout.name}
-            </h3>
-            <p className="text-gray-600 mb-1">{workout.description}</p>
-            <p className="text-sm text-gray-500 mb-3">
-              ⏱ {workout.duration} | 💪 {workout.category}
-            </p>
+            <h2 className="text-lg font-semibold">{workout.title}</h2>
+            <p className="text-gray-600 text-sm">{workout.category}</p>
 
-            {/* Buttons */}
-            {completedWorkouts.includes(workout.id) ? (
-              <span className="text-green-600 font-medium">✅ Completed</span>
-            ) : activeWorkout === workout.id ? (
+            {!completedWorkouts.includes(workout.id) && (
               <button
-                onClick={() => handleComplete(workout.id)}
-                className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
-              >
-                Complete Workout
-              </button>
-            ) : (
-              <button
-                onClick={() => handleStart(workout.id)}
-                className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+                onClick={() => handleStart(workout)}
+                className="mt-2 px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600"
               >
                 Start Workout
               </button>
             )}
+
+            {completedWorkouts.includes(workout.id) && (
+              <span className="text-green-600 font-semibold mt-2 block">
+                ✅ Completed
+              </span>
+            )}
           </div>
         ))}
       </div>
+
+      {/* Selected workout details */}
+      {selectedWorkout && (
+        <div className="mt-8 p-4 bg-yellow-100 border border-yellow-400 rounded">
+          <h3 className="text-xl font-bold mb-2">
+            🏁 Currently Doing: {selectedWorkout.title}
+          </h3>
+          <p>{selectedWorkout.instructions}</p>
+          <button
+            onClick={handleComplete}
+            className="mt-4 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600"
+          >
+            Complete Workout
+          </button>
+        </div>
+      )}
     </div>
   )
 }
