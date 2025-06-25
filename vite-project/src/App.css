@@ -549,3 +549,118 @@ body {
     font-size: 1.1rem;
   }
 }
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.03);
+    opacity: 0.85;
+  }
+}
+
+@media (max-width: 640px) {
+  .workout-container {
+    margin: 2rem 1rem;
+    padding: 1.25rem;
+  }
+
+  .workout-title {
+    font-size: 1.6rem;
+  }
+
+  .workout-card-title {
+    font-size: 1rem;
+  }
+
+  .detail-title {
+    font-size: 1.1rem;
+  }
+
+  .filter-select {
+    width: 100%;
+  }
+
+  .start-button,
+  .complete-button {
+    width: 100%;
+    padding: 0.75rem;
+  }
+}
+
+.timer-text {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #444;
+  animation: pulse 1.2s infinite ease-in-out;
+}
+
+.complete-button,
+.start-button {
+  margin-top: 1rem;
+  background-color: var(--primary-color); 
+  color: #fff;
+  padding: 0.6rem 1.3rem;
+  border: none;
+  border-radius: var(--border-radius);
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.complete-button {
+  background-color: #22c55e;
+}
+
+.complete-button:hover {
+  background-color: #16a34a;
+  transform: scale(1.03);
+}
+
+.start-button:hover {
+  background-color: #4a55e2;
+  transform: scale(1.03);
+}
+
+.completed-text {
+  margin-top: 1rem;
+  color: #2d8a46;
+  font-weight: 600;
+  display: block;
+}
