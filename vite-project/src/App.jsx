@@ -1,50 +1,49 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import Navbar from './components/Navbar'
+// App.jsx
+import { Routes, Route } from 'react-router-dom'
+import Dashboard from './pages/Dashboard'
 import Login from './pages/Login'
 import Register from './pages/Register'
-import Dashboard from './pages/Dashboard'
-import Profile from './pages/Profile'
 import Workouts from './pages/Workouts'
-import PrivateRoute from './components/PrivateRoute'
+import Profile from './pages/Profile'
+import Navbar from './components/Navbar'
+import ProtectedRoute from './components/ProtectedRoute'
 
 function App() {
   return (
-    <Router>
+    <>
       <Navbar />
       <Routes>
+        {/* Public routes */}
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
 
-        {/* Protected Routes */}
+        {/* Protected routes */}
         <Route
-          path="/dashboard"
+          path="/"
           element={
-            <PrivateRoute>
+            <ProtectedRoute>
               <Dashboard />
-            </PrivateRoute>
+            </ProtectedRoute>
           }
         />
         <Route
           path="/workouts"
           element={
-            <PrivateRoute>
+            <ProtectedRoute>
               <Workouts />
-            </PrivateRoute>
+            </ProtectedRoute>
           }
         />
         <Route
           path="/profile"
           element={
-            <PrivateRoute>
+            <ProtectedRoute>
               <Profile />
-            </PrivateRoute>
+            </ProtectedRoute>
           }
         />
-
-        {/* Default fallback route (optional) */}
-        <Route path="*" element={<Login />} />
       </Routes>
-    </Router>
+    </>
   )
 }
 
