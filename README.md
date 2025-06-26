@@ -135,18 +135,11 @@ src/
 
 ---
 
-## 💡 Roadmap
 
-* User progress history
-* File uploads (profile pics)
-* Workout videos / GIFs
-* Push to Render (Flask) & Vercel (React) for live demo
-
----
 
 ### 👷‍♂️ Contributors
-    1.Rodney Amani
-    2.Ian Mwendwa
+    1. Rodney Amani
+    2. Ian Mwendwa
 
 ---
 
